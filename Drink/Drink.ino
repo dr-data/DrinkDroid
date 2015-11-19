@@ -7,43 +7,24 @@
   
   //Declares the Servo names and pin attatchments
   Servo vodka, rum, oj, crown, coke, liquer;
-  int vod=3;
-  int rm=5;
-  int juc=6;
-  int crow=9;
-  int cok=10;
-  int liq=11;
-  int on=70;
-  int off=162;//169 for rum/black motor
-  int shot=1350;
+  int vod=3, rm=5, juc=6;
+  int crow=9, cok=10, liq=11;
+  int on=70, off=162, shot=1350;
   
   // Creates a counter for each valve
-  int vodCounter;
-  int rumCounter;
-  int crownCounter;
-  int liqCounter;
-  int jucCounter;
-  int cokeCounter;
+  int vodCounter, rumCounter, crownCounter;
+  int liqCounter, jucCounter, cokeCounter;
   
   // Declares the pins for each beverage selection
-  int screwDriver=8;
-  int cokeRum=2;
-  int crownCoke=4;
-  int liqJuice=7;
-  int mode=0;
-  int modeButton=12;
+  int screwDriver=8, cokeRum=2, crownCoke=4;
+  int liqJuice=7, mode=0, modeButton=12;
  
   // Creates variables to keep track of last button state for debouncing purposes
-  boolean lastButtonScrew=LOW;
-  boolean currentButtonScrew=LOW;
-  boolean lastButtonCoken=LOW;
-  boolean currentButtonCoken=LOW;
-  boolean lastButtonCrown=LOW;
-  boolean currentButtonCrown=LOW;
-  boolean lastButtonLiq=LOW;
-  boolean currentButtonLiq=LOW;
-  boolean lastButtonMode=LOW;
-  boolean currentButtonMode=LOW;
+  boolean lastButtonScrew=LOW, currentButtonScrew=LOW;
+  boolean lastButtonCoken=LOW, currentButtonCoken=LOW;
+  boolean lastButtonCrown=LOW, currentButtonCrown=LOW;
+  boolean lastButtonLiq=LOW, currentButtonLiq=LOW;
+  boolean lastButtonMode=LOW, currentButtonMode=LOW;
   
   
   void setup()
