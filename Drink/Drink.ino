@@ -2,7 +2,10 @@
   #include<Wire.h>
   #include<LiquidCrystal_I2C.h>
   
+  // Declares the LCD display
   LiquidCrystal_I2C lcd(0x27,20,4);
+  
+  //Declares the Servo names and pin attatchments
   Servo vodka, rum, oj, crown, coke, liquer;
   int vod=3;
   int rm=5;
@@ -13,12 +16,16 @@
   int on=70;
   int off=162;//169 for rum/black motor
   int shot=1350;
+  
+  // Creates a counter for each valve
   int vodCounter;
   int rumCounter;
   int crownCounter;
   int liqCounter;
   int jucCounter;
   int cokeCounter;
+  
+  // Declares the pins for each beverage selection
   int screwDriver=8;
   int cokeRum=2;
   int crownCoke=4;
@@ -26,7 +33,7 @@
   int mode=0;
   int modeButton=12;
  
-  
+  // Creates variables to keep track of last button state for debouncing purposes
   boolean lastButtonScrew=LOW;
   boolean currentButtonScrew=LOW;
   boolean lastButtonCoken=LOW;
@@ -41,7 +48,6 @@
   
   void setup()
   {
-    
     // initialize the lcd and write
     lcd.init();
     lcd.backlight();
@@ -49,6 +55,7 @@
     lcd.print("Waseem's DrinkDroid");
     lcd.setCursor(0,0);
     lcd.print("Select a Drink");
+    
     // attach servos to certain pins
     vodka.attach(vod); 
     rum.attach(rm);
@@ -56,6 +63,7 @@
     crown.attach(crow);  
     coke.attach(cok); 
     liquer.attach(liq);
+    
    // set all servos to off position
     vodka.write(off);
     rum.write(169);
@@ -63,18 +71,24 @@
     crown.write(off); 
     coke.write(off);
     liquer.write(off);
+    
+    // Sets the amount of time in milliseconds each
     vodCounter=1350;
     rumCounter=1350;
     crownCounter=1350;
     liqCounter=1350;
     jucCounter=1000;
     cokeCounter=1000;
+    
+    // Sets the pins up as inputs
     pinMode(screwDriver,INPUT);
     pinMode(cokeRum,INPUT);
     pinMode(crownCoke,INPUT);
     pinMode(liqJuice,INPUT);
     pinMode(modeButton,INPUT);
     delay(500);
+    
+    // Keep the servos detached until they are needed to pour a drink
     vodka.detach(); 
     rum.detach();
     oj.detach(); 
@@ -84,7 +98,8 @@
   }
   
   void loop() 
-  {//Drinks
+  {
+    // Waits for a button press then checks the mode to see which type of drink needs to be poured
       currentButtonScrew = debounce(lastButtonScrew, screwDriver);
       if (lastButtonScrew == LOW && currentButtonScrew == HIGH)
       {
@@ -265,6 +280,7 @@
       lastButtonMode = currentButtonMode;
   } 
   
+  // Debounces the button press in order to ensure no static throws off the reading
   boolean debounce(boolean last, int pin)
   {
     boolean current = digitalRead(pin);
@@ -276,6 +292,7 @@
     return current;
   }
   
+  // Opens the specified valves to pour the selected drink. Updates the LCD to give the user feedback on what is coming
   void pourDrink(Servo alc, Servo chase, String words, int sec, int alccounter, int chasecounter)
   {
           shot=alccounter;
@@ -298,13 +315,14 @@
           lcd.setCursor(0,0);
           lcd.print("Select a drink");
           lcd.setCursor(0,2);
-          lcd.print("Ready, go get drunk");
+          lcd.print("Ready, enjoy!");
           lcd.setCursor(0,3);
           lcd.print("Waseem's DrinkDroid");
           alc.write(sec);
           chase.write(off);
   }
   
+  // Pours the selected shot and nforms the user of what they selected
   void pourShot(Servo alc, String words, int sec, int counter)
   {
           shot=counter;
@@ -324,12 +342,13 @@
           lcd.setCursor(0,0);
           lcd.print("Select a shot");
           lcd.setCursor(0,2);
-          lcd.print("Ready, go get drunk");
+          lcd.print("Ready, enjoy!");
           lcd.setCursor(0,3);
           lcd.print("Waseem's DrinkDroid");
           
   }
     
+  // Mixes three types of liquid and updates the user on their choice
   void pourComplexDrink(Servo alc, Servo liqu, Servo chase, String words,int sec, int alccounter,int liqcounter, int chasecounter)
   {
           shot=alccounter;
@@ -355,7 +374,7 @@
           lcd.setCursor(0,0);
           lcd.print("Select a drink");
           lcd.setCursor(0,2);
-          lcd.print("Ready, go get drunk");
+          lcd.print("Ready, enjoy!");
           lcd.setCursor(0,3);
           lcd.print("Waseem's DrinkDroid");
           alc.write(off);
@@ -364,6 +383,7 @@
           
   }
   
+  // Pours a shot of everything
   void deathDrink(Servo alc, Servo chase, Servo vod, Servo rum, Servo crown, Servo liq, String words, int sec, int alccounter, int chasecounter)
   {
           shot=chasecounter;
@@ -404,7 +424,7 @@
           lcd.setCursor(0,0);
           lcd.print("Select a drink");
           lcd.setCursor(0,2);
-          lcd.print("Ready, go get drunk");
+          lcd.print("Ready, enjoy!");
           lcd.setCursor(0,3);
           lcd.print("Waseem's DrinkDroid");
           alc.write(sec);
